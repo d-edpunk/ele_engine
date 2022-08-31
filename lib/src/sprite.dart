@@ -8,16 +8,33 @@ import 'renderer.dart';
 class EleSprite {
     String spritePath;
     Sprite? _sprite;
-    Vector2? position;
-    Vector2? size;
+    Vector2? _position;
+    Vector2? _size;
     bool _loaded = false;
 
     set sprite (String path) {
         spritePath = path;
         _loaded = false;
     }
+
+    Vector2 get position => renderer.getSpritePosition(_position ?? Vector2(0, 0));
+    set position (Vector2 position) {
+        _position = position;
+    }
+
+    Vector2 get size => renderer.getSpriteSize(_size ?? Vector2(3, 7));
+    set size (Vector2 size) {
+        _size = size;
+    }
     
-    EleSprite({this.spritePath = "", this.position, this.size});
+    EleSprite({this.spritePath = "", Vector2? position, Vector2? size}) {
+        if (position != null) {
+            _position = position;
+        }
+        if (size != null) {
+            _size = size;
+        }
+    }
     
     Future<void> onLoad() async {
         var image = await Flame.images.load(spritePath);
@@ -32,21 +49,21 @@ class EleSprite {
         if (_sprite != null) {
             _sprite!.render(
                 canvas,
-                position: renderer.getSpritePosition(position ?? Vector2(0, 0)),
-                size: renderer.getSpriteSize(size ?? Vector2(3, 7)),
+                position: renderer.getSpritePosition(_position ?? Vector2(0, 0)),
+                size: renderer.getSpriteSize(_size ?? Vector2(3, 7)),
             );
         } else {
             canvas.drawRect(
                 Rect.fromLTWH(
-                    renderer.getSpritePosition(position ?? Vector2(0, 0)).x,
-                    renderer.getSpritePosition(position ?? Vector2(0, 0)).y,
-                    renderer.getSpriteSize(size ?? Vector2(3, 7)).x,
-                    renderer.getSpriteSize(size ?? Vector2(3, 7)).y,
+                    position.x,
+                    position.y,
+                    size.x,
+                    size.y,
                 ),
                 Paint()
                     ..color = Colors.black,
             );
-            renderer.text.render(canvas, spritePath, renderer.getSpritePosition(position ?? Vector2(0, 0)));
+            renderer.text.render(canvas, spritePath, renderer.getSpritePosition(_position ?? Vector2(0, 0)));
         }
     }
 }
