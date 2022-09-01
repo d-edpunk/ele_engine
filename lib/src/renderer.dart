@@ -1,16 +1,28 @@
 import "package:flutter/widgets.dart" show TextStyle;
+import "package:flutter/material.dart" show Color, Colors;
 import "package:flame/game.dart";
 
 class Renderer {
     Vector2 screenSize = Vector2(0, 0);
-    TextPaint text = TextPaint(
-        style: TextStyle(
-            fontSize: 0.0,
-            fontFamily: "Awesome Font",
-        ),
-    );
+    Color color = Colors.white;
+    late TextPaint text;
 
     bool get isPortraight => screenSize.x > screenSize.y ? false : true;
+
+    Renderer() {
+         text = TextPaint(
+            style: TextStyle(
+                fontSize: 0.0,
+                fontFamily: "Awesome Font",
+                color: color,
+            ),
+        );
+    }
+
+    set textColor (Color newColor) {
+        color = newColor;
+        onGameResize(screenSize);
+    }
 
     void onGameResize(Vector2 canvasSize) {
         screenSize.x = canvasSize.x;

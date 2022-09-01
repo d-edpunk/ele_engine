@@ -63,6 +63,7 @@ class EleSprite {
                 Paint()
                     ..color = Colors.black,
             );
+            renderer.textColor = Colors.pink;
             renderer.text.render(
                 canvas, 
                 spritePath, 

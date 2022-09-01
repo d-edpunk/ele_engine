@@ -1,6 +1,41 @@
-import 'package:flutter/widgets.dart';
-import 'package:flame/game.dart';
-import 'sprite.dart';
+import "package:flutter/widgets.dart";
+import "package:flutter/material.dart" show Colors;
+import "package:flame/game.dart";
+import "sprite.dart";
+import "renderer.dart";
+
+class Phraze {
+    String text;
+    String author;
+    // Color authorColor;
+
+    Phraze(this.text, {this.author = "" /*, this.authorColor = Colors.white"*/});
+
+    void render(Canvas canvas) {
+        canvas.drawRect(
+            Rect.fromLTWH(
+                0,
+                renderer.getSpritePosition(Vector2(0, 7.2)).y,
+                renderer.screenSize.x,
+                renderer.getSpriteSize(Vector2(16, 1.8)).y,
+            ),
+            Paint()
+                ..color = Colors.black87,
+        );
+        // renderer.textColor = authorColor;
+        renderer.text.render(
+            canvas,
+            author,
+            renderer.getSpritePosition(Vector2(0.1, 7.3)),
+        );
+        // renderer.textColor = Colors.white;
+        renderer.text.render(
+            canvas,
+            "\n$text",
+            renderer.getSpritePosition(Vector2(0.1, 7.5)),
+        );
+    }
+}
 
 class Character extends EleSprite {
     String name;
@@ -63,7 +98,7 @@ class CharacterManager {
                 canvas,
                 position: Vector2(
                     8 - length / 2,
-                    8.9 - char.size.y,
+                    7.1 - char.size.y,
                 ),
             );
             length -= char.size.x * 2 + 0.25;

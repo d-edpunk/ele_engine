@@ -1,8 +1,8 @@
 name: ele_engine
-description: A new Flutter project.
+description: Flame Engine binding for visual novells creating.
 
 publish_to: 'none'
-version: 0.0.1
+version: 1.0.0
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
