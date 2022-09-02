@@ -9,7 +9,7 @@ class EleSprite {
     String spritePath;
     Sprite? _sprite;
     Vector2 _position = Vector2(0, 0);
-    Vector2 _size = Vector2(3, 7);
+    Vector2 size = Vector2(3, 7);
     bool _loaded = false;
 
     set sprite (String path) {
@@ -22,17 +22,12 @@ class EleSprite {
         _position = position;
     }
 
-    Vector2 get size => _size;
-    set size (Vector2 size) {
-        _size = size;
-    }
-    
     EleSprite({this.spritePath = "", Vector2? position, Vector2? size}) {
         if (position != null) {
             _position = position;
         }
         if (size != null) {
-            _size = size;
+            this.size = size;
         }
     }
     
@@ -50,15 +45,15 @@ class EleSprite {
             _sprite!.render(
                 canvas,
                 position: renderer.getSpritePosition(position ?? _position),
-                size: renderer.getSpriteSize(size ?? _size)
+                size: renderer.getSpriteSize(size ?? this.size)
             );
         } else {
             canvas.drawRect(
                 Rect.fromLTWH(
                     renderer.getSpritePosition(position ?? _position).x,
                     renderer.getSpritePosition(position ?? _position).y,
-                    renderer.getSpriteSize(size ?? _size).x,
-                    renderer.getSpriteSize(size ?? _size).y,
+                    renderer.getSpriteSize(size ?? this.size).x,
+                    renderer.getSpriteSize(size ?? this.size).y,
                 ),
                 Paint()
                     ..color = Colors.black,

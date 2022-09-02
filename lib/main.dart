@@ -20,9 +20,9 @@ class Game extends EleGame {
         size: Vector2(3, 3),
     );
 
-    Phraze ph = Phraze("Максимально длинный текст для проверки всякой хуйни с автопереносом. Я хуй знает, что тут еще писать. Пельмешки... Хочу пельменей... Ты нахуя это дальше читаешь, додик?", author: "kvadrat)");
-
+    @override
     Future<void> onLoad() async {
+        author.name = "Semen";
         bg.sprite = "bg.jpg";
         rect.onScene = true;
         zhenya.onScene = true;
@@ -32,7 +32,7 @@ class Game extends EleGame {
     @override 
     void render(Canvas canvas) {
         super.render(canvas);
-        ph.render(canvas);
+        author.speak("~ fuck u, bro) ~");
     }
 }
 var game = Game();

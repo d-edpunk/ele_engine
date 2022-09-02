@@ -1,4 +1,4 @@
-import "package:flutter/widgets.dart" show TextStyle;
+import "package:flutter/widgets.dart";
 import "package:flutter/material.dart" show Color, Colors;
 import "package:flame/game.dart";
 
@@ -7,8 +7,9 @@ class Renderer {
     Color color = Colors.white;
     late TextPaint text;
 
-    bool get isPortraight => screenSize.x > screenSize.y ? false : true;
+    bool get isLandscape => screenSize.x >= screenSize.y ? true : false;
 
+    // For text
     Renderer() {
          text = TextPaint(
             style: TextStyle(
@@ -30,26 +31,29 @@ class Renderer {
 
         text = TextPaint(
             style: TextStyle(
-                fontSize: screenSize.y / 9 / 4,
+                fontSize: (screenSize.x / 16 / 4 + screenSize.y / 9 / 4) / 2,
                 fontFamily: "Awesome Font",
             ),
         );
     }
 
+    // For sprites
     Vector2 getSpritePosition(Vector2 position) {
-        if (!isPortraight) {
+        /*if (isLandscape) {
             return Vector2((screenSize.x - screenSize.y / 9 * 16) / 2 + screenSize.y / 9 * position.x, screenSize.y / 9 * position.y);
         } else {
             return Vector2(screenSize.x / 16 * position.x, (screenSize.y - screenSize.x / 16 * 9) / 2 + screenSize.x / 16 * position.y);
-        }
+        }*/
+        return Vector2(screenSize.x / 16 * position.x, screenSize.y / 9 * position.y);
     }
 
     Vector2 getSpriteSize(Vector2 size) {
-        if (!isPortraight) {
+        /*if (isLandscape) {
             return Vector2(screenSize.y / 9 * size.x, screenSize.y / 9 * size.y);
         } else {
             return Vector2(screenSize.x / 16 * size.x, screenSize.x / 16 * size.y);
-        }
+        }*/
+        return Vector2(screenSize.x / 16 * size.x, screenSize.y / 9 * size.y);
     }
 }
 

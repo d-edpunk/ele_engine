@@ -10,6 +10,7 @@ class EleGame extends FlameGame /*with KeyboardEvents*/ {
     void onGameResize(Vector2 canvasSize) {
         super.onGameResize(canvasSize);
         renderer.onGameResize(canvasSize);
+        charman.onGameResize(canvasSize);
     }
 
     @override 

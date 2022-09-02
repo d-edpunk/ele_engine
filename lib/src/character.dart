@@ -4,39 +4,6 @@ import "package:flame/game.dart";
 import "sprite.dart";
 import "renderer.dart";
 
-class Phraze {
-    String text;
-    String author;
-    // Color authorColor;
-
-    Phraze(this.text, {this.author = "" /*, this.authorColor = Colors.white"*/});
-
-    void render(Canvas canvas) {
-        canvas.drawRect(
-            Rect.fromLTWH(
-                0,
-                renderer.getSpritePosition(Vector2(0, 7.2)).y,
-                renderer.screenSize.x,
-                renderer.getSpriteSize(Vector2(16, 1.8)).y,
-            ),
-            Paint()
-                ..color = Colors.black87,
-        );
-        // renderer.textColor = authorColor;
-        renderer.text.render(
-            canvas,
-            author,
-            renderer.getSpritePosition(Vector2(0.1, 7.3)),
-        );
-        // renderer.textColor = Colors.white;
-        renderer.text.render(
-            canvas,
-            "\n$text",
-            renderer.getSpritePosition(Vector2(0.1, 7.5)),
-        );
-    }
-}
-
 class Character extends EleSprite {
     String name;
     bool _onScene = false;
@@ -65,11 +32,21 @@ class Character extends EleSprite {
             );
         }
     }
+
+    void speak(String text) {
+        charman.uploadDialog(name, text);
+    }
 }
 
 class CharacterManager {
     List<Character> chars = [];
     int charsOnScene = 0;
+
+    bool dialog = true;
+    String buffer = "";
+    String formattedBuffer = "";
+    String author = "";
+    List<String> archive = [];
 
     CharacterManager();
 
@@ -82,6 +59,12 @@ class CharacterManager {
         return chars[chars.length - 1];
     }
 
+    void onGameResize(Vector2 canvasSize) {
+        _formatBuffer();
+    }
+
+
+    // Characters render
     void render(Canvas canvas) {
         var willBeRendered = <Character>[];
         for (var char in chars) {
@@ -103,6 +86,66 @@ class CharacterManager {
             );
             length -= char.size.x * 2 + 0.25;
         }
+
+        if (dialog) {
+            renderDialog(canvas);
+        }
     }
+
+    // Speak component
+    void _formatBuffer() {
+        formattedBuffer = "";
+        var maxLength = 140;
+        for (var letter in buffer.split('')) {
+            if (formattedBuffer.length % maxLength == 0) {
+                formattedBuffer = "$formattedBuffer\n";
+            }
+            formattedBuffer = "$formattedBuffer$letter";
+        }
+    }
+
+    void uploadDialog(String newAuthor, String newBuffer) {
+        if (formattedBuffer != "" || newAuthor != "") {
+            archive.insert(archive.length, "$author\n$formattedBuffer");
+        }
+        author = newAuthor;
+        buffer = newBuffer;
+        _formatBuffer();
+    }
+
+    void renderDialog(Canvas canvas) {
+        canvas.drawRect(
+            Rect.fromLTWH(
+                0,
+                renderer.getSpritePosition(Vector2(0, 7.2)).y,
+                renderer.screenSize.x,
+                renderer.getSpriteSize(Vector2(0, 1.8)).y,
+            ),
+            Paint()
+                ..color = Colors.black87,
+        );
+        renderer.text.render(
+            canvas,
+            author,
+            renderer.getSpritePosition(Vector2(0.1, 7.3)),
+        );
+        renderer.text.render(
+            canvas,
+            formattedBuffer,
+            renderer.getSpritePosition(Vector2(0.1, 7.4)),
+        );
+    }
+
 }
 var charman = CharacterManager();
+
+class Speaker extends Character {
+    Speaker() : super(
+        name: "",
+        spritePath: "",
+    );
+
+    @override
+    void render(Canvas canvas, {Vector2? position, Vector2? size});
+}
+var author = Speaker();
