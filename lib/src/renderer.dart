@@ -20,8 +20,8 @@ class Renderer {
         );
     }
 
-    set textColor (Color newColor) {
-        color = newColor;
+    set textColor (Color? newColor) {
+        color = newColor ?? Colors.white;
         onGameResize(screenSize);
     }
 

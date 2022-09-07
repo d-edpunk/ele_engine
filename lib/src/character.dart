@@ -87,6 +87,7 @@ class CharacterManager {
             length -= char.size.x * 2 + 0.25;
         }
 
+        // Dialog render
         if (dialog) {
             renderDialog(canvas);
         }
@@ -96,7 +97,7 @@ class CharacterManager {
     void _formatBuffer() {
         formattedBuffer = "";
         var maxLength = 140;
-        for (var letter in buffer.split('')) {
+        for (var letter in buffer.split("")) {
             if (formattedBuffer.length % maxLength == 0) {
                 formattedBuffer = "$formattedBuffer\n";
             }
@@ -104,6 +105,7 @@ class CharacterManager {
         }
     }
 
+    // Dialogs
     void uploadDialog(String newAuthor, String newBuffer) {
         if (formattedBuffer != "" || newAuthor != "") {
             archive.insert(archive.length, "$author\n$formattedBuffer");
@@ -139,13 +141,13 @@ class CharacterManager {
 }
 var charman = CharacterManager();
 
-class Speaker extends Character {
-    Speaker() : super(
-        name: "",
-        spritePath: "",
-    );
+class Speaker {
+    String name;
 
-    @override
-    void render(Canvas canvas, {Vector2? position, Vector2? size});
+    Speaker({this.name = ""});
+
+    void speak(String text) {
+        charman.uploadDialog(name, text);
+    }
 }
 var author = Speaker();

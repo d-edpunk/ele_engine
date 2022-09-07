@@ -1,8 +1,8 @@
 name: ele_engine
-description: Flame Engine binding for visual novells creating.
+description: Flame Engine binding for creating visual novells.
 
 publish_to: 'none'
-version: 1.0.0
+version: 1.0.3
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
