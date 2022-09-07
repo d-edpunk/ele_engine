@@ -1,8 +1,10 @@
 name: ele_engine
 description: Flame Engine binding for creating visual novells.
 
-publish_to: 'none'
+publish_to: "https://pub.dev/packages/ele_engine"
 version: 1.0.3
+
+repository: https://github.com/cyxoctb/ele_engine.git
 
 environment:
   sdk: ">=2.17.6 <3.0.0"
@@ -11,7 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.2
-  flame: 1.3.0
+  flame: ">=1.0.0 <1.3.0"
 
 dev_dependencies:
   flutter_test:
