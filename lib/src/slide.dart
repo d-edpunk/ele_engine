@@ -1,35 +1,37 @@
 class Slide {
-    Function() onLoad;
+  Function() onLoad;
 
-    Slide(this.onLoad);
+  Slide(this.onLoad);
 }
 
 class SlideManager {
-    List<Slide> slides = [];
-    int _counter = 1;
+  List<Slide> slides = [];
+  int _counter = 1;
 
-    int get counter => _counter;
+  int get counter => _counter;
 
-    void operator +(int? n) {
-        _counter += n ?? 1;
-        if (_counter > slides.length - 1) {
-            _counter = slides.length - 1;
-        }
-        onLoad();
+  void operator +(int? n) {
+    _counter += n ?? 1;
+    if (_counter > slides.length - 1) {
+      _counter = slides.length - 1;
     }
+    onLoad();
+  }
 
-    void addSlide(Slide newSlide) {
-        slides.insert(slides.length, newSlide);
-    }
+  void addSlide(Slide newSlide) {
+    slides.insert(slides.length, newSlide);
+  }
 
-    void addSlides(List<Slide> newSlides) {
-        for (var slide in newSlides) {
-            slides.insert(slides.length, slide);
-        }
+  void addSlides(List<Slide> newSlides) {
+    for (var slide in newSlides) {
+      slides.insert(slides.length, slide);
     }
+  }
 
-    void onLoad() async {
-        slides[_counter > slides.length - 1 ? slides.length - 1 : _counter].onLoad();
-    }
+  void onLoad() async {
+    slides[_counter > slides.length - 1 ? slides.length - 1 : _counter]
+        .onLoad();
+  }
 }
+
 var slideman = SlideManager();
